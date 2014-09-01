@@ -65,8 +65,9 @@ div.comment-author {
     width: 100px;
 }
 
-.comment-flag , .comment-unflag {
-    float:left;
+.comment-flag,
+.comment-unflag {
+    float: left;
     cursor: pointer;
 }
 
@@ -95,7 +96,8 @@ input.hidden {
     display:none;
 }
 
-span.comment-flag, span.comment-unflag {
+span.comment-flag,
+span.comment-unflag {
     padding-left: 6px;
     cursor: pointer;
 }
