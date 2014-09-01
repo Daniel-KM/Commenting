@@ -1,9 +1,6 @@
 <?php
-
-
 class Commenting_CommentForm extends Omeka_Form
 {
-
     public function init()
     {
         parent::init();
@@ -11,17 +8,32 @@ class Commenting_CommentForm extends Omeka_Form
         $this->setAttrib('id', 'comment-form');
         $user = current_user();
 
-        $urlOptions = array(
-                'label'=>__('Website'),
-            );
-        $emailOptions = array(
-                'label'=>__('Email (required)'),
-                'required'=>true,
-                'validators' => array(
-                    array('validator' => 'EmailAddress'
-                    )
+        //assume registered users are trusted and don't make them play recaptcha
+        if (!$user && get_option('recaptcha_public_key') && get_option('recaptcha_private_key')) {
+            $this->addElement('captcha', 'captcha',  array(
+                'label' => __("Please verify you're a human"),
+                'captcha' => array(
+                    'captcha' => 'ReCaptcha',
+                    'pubkey' => get_option('recaptcha_public_key'),
+                    'privkey' => get_option('recaptcha_private_key'),
+                    'ssl' => true, //make the connection secure so IE8 doesn't complain. if works, should branch around http: vs https:
                 )
-            );
+            ));
+            $this->getElement('captcha')->removeDecorator('ViewHelper');
+        }
+
+        $urlOptions = array(
+            'label'=>__('Website'),
+        );
+        $emailOptions = array(
+            'label'=>__('Email (required)'),
+            'required'=>true,
+            'validators' => array(
+                array(
+                    'validator' => 'EmailAddress',
+                )
+            )
+        );
         $nameOptions =  array('label'=> __('Your name'));
 
         if($user) {
@@ -31,35 +43,21 @@ class Commenting_CommentForm extends Omeka_Form
         $this->addElement('text', 'author_name', $nameOptions);
         $this->addElement('text', 'author_url', $urlOptions);
         $this->addElement('text', 'author_email', $emailOptions);
-        $this->addElement('textarea', 'body',
-            array('label'=>__('Comment'),
-                  'description'=> __("Allowed tags:") . " &lt;p&gt;, &lt;a&gt;, &lt;em&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;",
-                  'id'=>'comment-form-body',
-                  'rows' => 6,
-                  'required'=>true,
-                  'filters'=> array(
-                      array('StripTags',
-                              array('allowTags' => array('p', 'span', 'em', 'strong', 'a','ul','ol','li'),
-                                    'allowAttribs' => array('style', 'href')
-                                     ),
-                              ),
-                      ),
-                )
-            );
-
-        //assume registered users are trusted and don't make them play recaptcha
-        if(!$user && get_option('recaptcha_public_key') && get_option('recaptcha_private_key')) {
-            $this->addElement('captcha', 'captcha',  array(
-                'label' => __("Please verify you're a human"),
-                'captcha' => array(
-                    'captcha' => 'ReCaptcha',
-                    'pubkey' => get_option('recaptcha_public_key'),
-                    'privkey' => get_option('recaptcha_private_key'),
-                    'ssl' => true //make the connection secure so IE8 doesn't complain. if works, should branch around http: vs https:
-                )
-            ));
-            $this->getElement('captcha')->removeDecorator('ViewHelper');
-        }
+        $this->addElement('textarea', 'body', array(
+            'label' =>__('Comment'),
+            'description' => __("Allowed tags:") . " &lt;p&gt;, &lt;a&gt;, &lt;em&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;",
+            'id'=>'comment-form-body',
+            'required' => true,
+            'filters' => array(
+                array(
+                    'StripTags',
+                    array(
+                        'allowTags' => array('p', 'span', 'em', 'strong', 'a','ul','ol','li'),
+                        'allowAttribs' => array('style', 'href'),
+                    ),
+                ),
+            ),
+        ));
 
         // The legal agreement is checked by default for logged users.
         if (get_option('commenting_legal_text')) {
@@ -87,7 +85,7 @@ class Commenting_CommentForm extends Omeka_Form
 
         $this->addElement('hidden', 'record_id', array('value'=>$record_id, 'decorators'=>array('ViewHelper') ));
         $this->addElement('hidden', 'path', array('value'=>  $request->getPathInfo(), 'decorators'=>array('ViewHelper')));
-        if(isset($params['module'])) {
+        if (isset($params['module'])) {
             $this->addElement('hidden', 'module', array('value'=>$params['module'], 'decorators'=>array('ViewHelper')));
         }
         $this->addElement('hidden', 'record_type', array('value'=>$record_type, 'decorators'=>array('ViewHelper')));
@@ -110,7 +108,7 @@ class Commenting_CommentForm extends Omeka_Form
                     } else if(!empty($params['item_id'])) {
                         $id = $params['item_id'];
                     } else {
-//todo: check the ifs for an exhibit showing an item
+//TODO: check the ifs for an exhibit showing an item
                     }
                     break;
 
