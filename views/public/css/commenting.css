@@ -91,7 +91,9 @@ p.comment-author-name {
 div.success {
     font-size: 1.8em;
 }
-
+.errors {
+    color: red;
+}
 input.hidden {
     display:none;
 }
