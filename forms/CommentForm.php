@@ -115,7 +115,7 @@ class Commenting_CommentForm extends Omeka_Form
     /**
      * Helper to get record id from request params.
      *
-     * @see plugins/Commenting/views/helpers/GetComments.php
+     * @see plugins/Commenting/views/helpers/Comments.php
      *
      * @todo To be merged.
      */
@@ -170,7 +170,7 @@ class Commenting_CommentForm extends Omeka_Form
     /**
      * Helper to get record type from request params.
      *
-     * @see plugins/Commenting/views/helpers/GetComments.php
+     * @see plugins/Commenting/views/helpers/Comments.php
      *
      * @todo To be merged.
      */

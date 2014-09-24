@@ -240,10 +240,11 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
                     || is_allowed('Commenting_Comment', 'show')
                 ) {
                 $options = array(
+                    'record' => $record,
                     'threaded' => get_option('commenting_threaded'),
                     'approved' => true,
                 );
-                $comments = isset($args['comments']) ? $args['comments'] : $view->getComments($options, $record);
+                $comments = isset($args['comments']) ? $args['comments'] : $view->comments()->get($options);
                 $html .= $view->partial('common/comments.php', array(
                     'comments' => $comments,
                     'threaded' => $options['threaded'],
@@ -276,7 +277,7 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
     }
 
     /**
-     * This hook can be used in place of view helpers GetComments() and
+     * This hook can be used in place of view helpers Comments() and
      * GetCommentForm().
      */
     public function hookCommentingComments($args)
@@ -284,13 +285,22 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
         $this->_showComments($args);
     }
 
-    public function hookConfigForm()
+    /**
+     * Shows plugin configuration page.
+     */
+    public function hookConfigForm($args)
     {
-        echo get_view()->partial(
+        $view = $args['view'];
+        echo $view->partial(
             'plugins/commenting-config-form.php'
         );
     }
 
+    /**
+     * Saves plugin configuration page.
+     *
+     * @param array Options set in the config form.
+     */
     public function hookConfig($args)
     {
         $post = $args['post'];
