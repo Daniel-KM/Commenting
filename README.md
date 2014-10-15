@@ -66,7 +66,7 @@ fire_plugin_hook('public_collections_show', array('view' => $this, 'collection' 
 
 For flexibility and to enable commenting on other record types from modules
 (e.g. SimplePages or ExhibitBuilder), you will have to add the following lines
-to the appropriate place in the plugin's public view script:
+to the appropriate place in the theme script:
 
 ```php
 fire_plugin_hook('commenting_comments');
@@ -82,7 +82,7 @@ fire_plugin_hook('commenting_comments', array(
 ));
 ```
 
-For example, to show comments on exhibit sections and pages, the file `/plugins/ExhibitBuilder/views/public/exhibits/show.php`
+For example, to show comments on exhibit sections and pages, the theme file `/exhibit-builder/exhibits/show.php`
 could look like:
 
 ```php
@@ -124,6 +124,10 @@ echo head(array(
 
 <?php echo foot(); ?>
 ```
+
+The theme files (`comment.php`, `threaded-comments.php` and `comments.php`
+should be adapted and saved in the `common` folder of the theme and, for
+exhibits, in a sub-folder of `exhibit-builder`.
 
 Keep in mind that updating themes or plugins will clobber your addition of the
 commenting functions.
