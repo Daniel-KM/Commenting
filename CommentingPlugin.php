@@ -290,7 +290,7 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
      */
     public function hookConfigForm($args)
     {
-        $view = $args['view'];
+        $view = get_view();
         echo $view->partial(
             'plugins/commenting-config-form.php'
         );
