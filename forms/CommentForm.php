@@ -2,6 +2,7 @@
 class Commenting_CommentForm extends Omeka_Form
 {
     protected $_record;
+    private $_antispam;
 
     /**
      * Constructor
@@ -11,9 +12,10 @@ class Commenting_CommentForm extends Omeka_Form
      * @param mixed $options
      * @return void
      */
-    public function __construct($record = null)
+    public function __construct($record = null, $antispam = array())
     {
         $this->_record = $record;
+        $this->_antispam = $antispam;
 
         parent::__construct();
     }
@@ -93,6 +95,48 @@ class Commenting_CommentForm extends Omeka_Form
                     )),
                 ),
             ));
+        }
+
+        // The simple antispam for anonymous people.
+        if (get_option('commenting_antispam') && empty($user)) {
+            if ($this->_antispam) {
+                $a = array_shift($this->_antispam);
+                $b = array_shift($this->_antispam);
+            }
+            else {
+                // Return only one digit.
+                $a = mt_rand(0, 6);
+                $b = mt_rand(1, 3);
+            }
+            $result = (string) ($a + $b);
+
+            $question = __('How much is %d plus %d?', $a, $b);
+            // Use the name "address" for spam.
+            $this->addElement('hidden', 'address_a', array('value' => $a, 'decorators' => array('ViewHelper')));
+            $this->addElement('hidden', 'address_b', array('value' => $b, 'decorators' => array('ViewHelper')));
+            $this->addElement('text', 'address', array(
+                'label' => '',
+                'description' => __('To prove you are not a robot, answer this question: %s', $question),
+                'required' => true,
+                'validators' => array(
+                    array('notEmpty', true, array(
+                        'messages' => array(
+                            'isEmpty' => __('You must answer the antispam question.'),
+                        ),
+                    )),
+                    array('identical', false, array(
+                        'token' => $result,
+                        'messages' => array(
+                            'notSame' => __('Check your anwser to the antispam question.'),
+                        ),
+                    )),
+                ),
+            ));
+        }
+
+        // A simple honey pot for spam bots.
+        if (get_option('commenting_honeypot') && empty($user)) {
+            $this->addElement('hidden', 'city', array('value' => '', 'decorators' => array('ViewHelper')));
         }
 
         $request = Zend_Controller_Front::getInstance()->getRequest();

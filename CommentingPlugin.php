@@ -60,6 +60,8 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
         'commenting_require_public_moderation' => true,
         'commenting_allow_public_view' => true,
         'commenting_wpapi_key' => '',
+        'commenting_antispam' => true,
+        'commenting_honeypot' => true,
     );
 
     /**

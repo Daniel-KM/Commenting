@@ -37,13 +37,14 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
 
     public function addAction()
     {
-        $destination = $_POST['path'];
-        $module = isset($_POST['module']) ? Inflector::camelize($_POST['module']) : '';
+        $post = $this->getRequest()->getPost();
+        $destination = $post['path'];
+        $module = isset($post['module']) ? Inflector::camelize($post['module']) : '';
         $destArray = array(
             'module' => $module,
-            'controller' => strtolower(Inflector::pluralize($_POST['record_type'])),
+            'controller' => strtolower(Inflector::pluralize($post['record_type'])),
             'action' => 'show',
-            'id' => $_POST['record_id']
+            'id' => $post['record_id']
         );
 
         $comment = new Comment();
@@ -51,12 +52,13 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
             $comment->user_id = $user->id;
         }
         $comment->flagged = 0;
+
         $form = $this->_getForm();
-        $valid = $form->isValid($this->getRequest()->getPost());
+        $valid = $form->isValid($post);
         if (!$valid) {
             $destination .= "#comment-form";
             $commentSession = new Zend_Session_Namespace('commenting');
-            $commentSession->post = serialize($_POST);
+            $commentSession->post = serialize($post);
             $this->_helper->redirector->gotoUrl($destination);
         }
 
@@ -72,13 +74,16 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
         }
 
         //need getValue to run the filter
-        $data = $_POST;
+        $data = $post;
         $data['body'] = $form->getElement('body')->getValue();
         $data['ip'] = $_SERVER['REMOTE_ADDR'];
         $data['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         $data['approved'] = !$requiresApproval;
         $comment->setArray($data);
         $comment->checkSpam();
+        if ($comment->is_spam) {
+            $comment->approved = 0;
+        }
         $comment->save();
         $destination .= "#comment-" . $comment->id;
         $this->_helper->redirector->gotoUrl($destination);
@@ -223,6 +228,10 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
     private function _getForm()
     {
         require_once dirname(dirname(__FILE__)) . '/forms/CommentForm.php';
-        return new Commenting_CommentForm;
+        $post = $this->getRequest()->getPost();
+        $a = (integer) $post['address_a'];
+        $b = (integer) $post['address_b'];
+        $form = new Commenting_CommentForm(null, array($a, $b));
+        return $form;
     }
 }

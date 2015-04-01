@@ -261,7 +261,6 @@ jQuery(window).load(function () {
 <p class="alert"><?php echo __("You have not entered your %s API keys under %s. We recommend adding these keys, or the commenting form will be vulnerable to spam.", '<a href="http://recaptcha.net/">reCAPTCHA</a>', "<a href='" . url('security#recaptcha_public_key') . "'>" . __('security settings') . "</a>");?></p>
 <?php endif; ?>
 
-
 <div class="field">
     <div class="two columns alpha">
         <?php echo $this->formLabel('commenting_wpapi_key',
@@ -274,5 +273,29 @@ jQuery(window).load(function () {
                 array('size' => 45)
             );?>
         </div>
+    </div>
+</div>
+
+<div class="field">
+    <div class="two columns alpha">
+        <?php echo $this->formLabel('commenting_antispam', __('Simple antispam')); ?>
+    </div>
+    <div class='inputs five columns omega'>
+        <?php echo $this->formCheckbox('commenting_antispam', true, array('checked' => (boolean) get_option('commenting_antispam'))); ?>
+        <p class="explanation">
+            <?php echo __('If checked, a simple antispam will be added for anonymous people (an addition of two digits).'); ?>
+        </p>
+    </div>
+</div>
+
+<div class="field">
+    <div class="two columns alpha">
+        <?php echo $this->formLabel('commenting_honeypot', __('Honey pot')); ?>
+    </div>
+    <div class='inputs five columns omega'>
+        <?php echo $this->formCheckbox('commenting_honeypot', true, array('checked' => (boolean) get_option('commenting_honeypot'))); ?>
+        <p class="explanation">
+            <?php echo __('If checked, a honey pot will be added for spam bots.'); ?>
+        </p>
     </div>
 </div>

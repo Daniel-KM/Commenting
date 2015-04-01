@@ -64,8 +64,13 @@ class Comment extends Omeka_Record_AbstractRecord
             } catch (Exception $e) {
                 $this->is_spam = 1;
             }
-        } else {
-            //if not using Akismet, assume only registered users are commenting
+        }
+        // Check if honey pot is filled.
+        elseif (!empty($this->city)) {
+            $this->is_spam = 1;
+        }
+        // If not using Akismet, assume only registered users are commenting.
+        else {
             $this->is_spam = 0;
         }
     }

@@ -1,8 +1,6 @@
 Commenting (plugin for Omeka)
 =============================
 
-About
------
 
 [Commenting] is a plugin for [Omeka] that provides a beefier implementation of
 comments than the earlier Comment plugin. It allows for comments on any record
@@ -10,7 +8,7 @@ type (in theory, at least), and includes both ReCaptchas and Akismet spam
 detection.
 
 Commenting also allows for moderation and commenting permissions based on role.
-Logged-in users are not required to submit recaptchas.
+Logged-in users are not required to submit recaptchas, if enabled.
 
 
 Installation
@@ -44,6 +42,9 @@ available in these options
 viewing comments -- they will be open to all
 * Akismet API key: You should get an API key to the Akismet spam management
 service if you use public commenting
+* Simple antispam: a simple question (addition of two digits) will be added to
+the form.
+* Honey pot: a hidden field will be added to avoid basic spam bots.
 
 See Use Cases below for examples of configuration combinations
 
@@ -207,14 +208,14 @@ Copyright
 ---------
 
 * Copyright Center for History and New Media, 2011-2013
-* Copyright Daniel Berthereau, 2013-2014 [Daniel-KM] pour [Mines ParisTech]
+* Copyright Daniel Berthereau, 2013-2015 [Daniel-KM] for [Mines ParisTech]
 
 
-[Omeka]: https://omeka.org "Omeka.org"
+[Omeka]: https://omeka.org
 [Commenting]: https://github.com/omeka/plugin-Commenting
 [Commenting issues]: http://omeka.org/forums/forum/plugins
 [GuestUser]: https://github.com/omeka/plugin-GuestUser
-[GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html "GNU/GPL v3"
+[GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [Center for History & New Media]: http://chnm.gmu.edu
 [Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
-[Mines ParisTech]: http://bib.mines-paristech.fr "Mines ParisTech / ENSMP"
+[Mines ParisTech]: http://bib.mines-paristech.fr
