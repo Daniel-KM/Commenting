@@ -270,7 +270,7 @@ class Commenting_CommentForm extends Omeka_Form
     public function getDefaultElementDecorators()
     {
         return array(
-            array('Description', array('tag' => 'p', 'class' => 'commenting-explanation', 'escape'=>false)),
+            array('Description', array('tag' => 'div', 'class' => 'commenting-explanation', 'escape'=>false)),
             'ViewHelper',
             array('Errors', array('class' => 'error')),
             'Label',
