@@ -34,12 +34,12 @@ Configuration
 * ReCaptcha Keys: These keys duplicate the fields found in the Omeka Security
 settings. ReCaptcha challenges only appear when there is no user logged in.
 * Permissions
-** Options are available to specify what roles can approve, add, and view
-comments, and add comments without approval
-** If the GuestUser plugin is installaed and activated, the guest role is
-available in these options
-** Allowing Public commenting will override the permissions set for adding and
-viewing comments -- they will be open to all
+  ** Options are available to specify what roles can approve, add, and view
+  comments, and add comments without approval
+  ** If the GuestUser plugin is installaed and activated, the guest role is
+  available in these options
+  ** Allowing Public commenting will override the permissions set for adding and
+  viewing comments -- they will be open to all
 * Akismet API key: You should get an API key to the Akismet spam management
 service if you use public commenting
 * Simple antispam: a simple question (addition of two digits) will be added to
