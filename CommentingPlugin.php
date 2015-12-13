@@ -306,19 +306,19 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
     public function hookConfig($args)
     {
         $post = $args['post'];
-        foreach (array(
-                'commenting_pages',
-                'commenting_comment_roles',
-                'commenting_moderate_roles',
-                'commenting_view_roles',
-                'commenting_reqapp_comment_roles',
-            ) as $posted) {
-            $post[$posted] = isset($post[$posted])
-                ? serialize($post[$posted])
-                : serialize(array());
-        }
-        foreach ($post as $key => $value) {
-            set_option($key, $value);
+        foreach ($this->_options as $optionKey => $optionValue) {
+            if (in_array($optionKey, array(
+                    'commenting_pages',
+                    'commenting_comment_roles',
+                    'commenting_moderate_roles',
+                    'commenting_view_roles',
+                    'commenting_reqapp_comment_roles',
+                ))) {
+               $post[$optionKey] = serialize($post[$optionKey]) ?: serialize(array());
+            }
+            if (isset($post[$optionKey])) {
+                set_option($optionKey, $post[$optionKey]);
+            }
         }
     }
 

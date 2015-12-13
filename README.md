@@ -213,7 +213,7 @@ Copyright
 
 [Omeka]: https://omeka.org
 [Commenting]: https://github.com/omeka/plugin-Commenting
-[Commenting issues]: http://omeka.org/forums/forum/plugins
+[Commenting issues]: https://omeka.org/forums/forum/plugins
 [GuestUser]: https://github.com/omeka/plugin-GuestUser
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [Center for History & New Media]: http://chnm.gmu.edu

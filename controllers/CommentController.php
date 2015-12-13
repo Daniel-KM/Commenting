@@ -48,7 +48,8 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
         );
 
         $comment = new Comment();
-        if ($user = current_user()) {
+        $user = current_user();
+        if ($user) {
             $comment->user_id = $user->id;
         }
         $comment->flagged = 0;
