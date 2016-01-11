@@ -42,7 +42,7 @@ jQuery(window).load(function () {
                 foreach ($pages as $page => $label) {
                     echo '<li>';
                     echo $this->formCheckbox('commenting_pages[]', $page, array(
-                        'checked' => in_array($page, $commentingPages) ? 'checked' : '',
+                        'checked' => in_array($page, $commentingPages ? $commentingPages : array()) ? 'checked' : '',
                     ));
                     echo ' ' . $label;
                     echo '</li>';
@@ -258,7 +258,7 @@ jQuery(window).load(function () {
     </div>
 
 <?php if (!Omeka_Captcha::isConfigured()): ?>
-<p class="alert"><?php echo __("You have not entered your %s API keys under %s. We recommend adding these keys, or the commenting form will be vulnerable to spam.", '<a href="http://recaptcha.net/">reCAPTCHA</a>', "<a href='" . url('security#recaptcha_public_key') . "'>" . __('security settings') . "</a>");?></p>
+<p class="alert"><?php echo __("You have not entered your %s API keys under %s. We recommend adding these keys, or the commenting form will be vulnerable to spam.", '<a href="http://recaptcha.net/">reCAPTCHA</a>', "<a href='" . url('settings/edit-security#recaptcha_public_key') . "'>" . __('security settings') . "</a>");?></p>
 <?php endif; ?>
 
 <div class="field">
