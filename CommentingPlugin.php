@@ -90,6 +90,15 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
     public function hookInstall()
     {
         $db = $this->_db;
+
+        // we think the 3rd party Comment plugin uses the same name,
+        // and it doesn't delete its table on uninstall, causing some
+        // collision problems. So, clobber it if it's here
+        $sql = "
+            DROP TABLE IF EXISTS `$db->Comment`;
+        ";
+        $db->query($sql);
+
         $sql = "
             CREATE TABLE IF NOT EXISTS `$db->Comment` (
               `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
