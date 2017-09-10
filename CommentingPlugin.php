@@ -326,9 +326,9 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $acl = $args['acl'];
         $acl->addResource('Commenting_Comment');
-        $commentRoles = unserialize(get_option('commenting_comment_roles'));
-        $moderateRoles = unserialize(get_option('commenting_moderate_roles'));
-        $viewRoles = unserialize(get_option('commenting_view_roles'));
+        $commentRoles = unserialize(get_option('commenting_comment_roles')) ?: [];
+        $moderateRoles = unserialize(get_option('commenting_moderate_roles')) ?: [];
+        $viewRoles = unserialize(get_option('commenting_view_roles')) ?: [];
         $acl->allow(null, 'Commenting_Comment', array('flag'));
         if ($viewRoles !== false) {
             foreach ($viewRoles as $role) {
