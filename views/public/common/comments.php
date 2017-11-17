@@ -17,7 +17,7 @@
     <?php else: ?>
         <?php foreach ($comments as $comment): ?>
         <div id="comment-<?php echo $comment->id; ?>" class='comment'>
-            <?php echo $this->partial('common/comment.php', array('comment' => $comment)); ?>
+            <?php echo $this->partial('common/comment.php', 'commenting', array('comment' => $comment)); ?>
         </div>
         <?php endforeach; ?>
     <?php endif; ?>
