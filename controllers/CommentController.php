@@ -88,6 +88,7 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
         }
         $comment->save();
         $destination .= "#comment-" . $comment->id;
+
         $this->_helper->redirector->gotoUrl($destination);
     }
 
@@ -176,7 +177,7 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
                 $comment->save();
             }
         } else {
-            $response = array('status' => 'empty', 'message' => 'No Comments Found');
+            $response = array('status' => 'empty', 'message' => __('No Comments Found'));
         }
         if ($flagged) {
             $action = 'flagged';
@@ -212,8 +213,13 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
     {
         $mail = new Zend_Mail('UTF-8');
         $mail->addHeader('X-Mailer', 'PHP/' . phpversion());
-        $mail->setFrom(get_option('administrator_email'), get_option('site_title'));
-        $mail->addTo(get_option('commenting_flag_email'));
+        $adminEmail = get_option('administrator_email');
+        $mail->setFrom($adminEmail, get_option('site_title'));
+        $mail->addTo($adminEmail);
+        $flagEmail = get_option('commenting_flag_email');
+        if ($flagEmail) {
+            $mail->addTo($flagEmail);
+        }
         $subject = __("A comment on %s has been flagged as inappropriate", get_option('site_title'));
         $body = "<p>" . __("The comment %s has been flagged as inappropriate.", "<blockquote>{$comment->body}</blockquote>" ) . "</p>";
         $body .= "<p>" . __("You can manage the comment %s", "<a href='" . WEB_ROOT ."{$comment->path}'>" . __('here') . "</a>" ) . "</p>";
@@ -224,7 +230,6 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
         } catch(Exception $e) {
             _log($e);
         }
-
     }
 
     private function _getForm()

@@ -299,3 +299,16 @@ jQuery(window).load(function () {
         </p>
     </div>
 </div>
+
+<div class='field'>
+    <div class="two columns alpha">
+        <?php echo $this->formLabel('commenting_flag_email',
+            __('Email to send when flagged')); ?>
+    </div>
+    <div class='inputs five columns omega'>
+        <p class='explanation'><?php echo __('When flagged, an email is sent to the admin. This email is added if needed.'); ?></p>
+        <div class='input-block'>
+            <?php echo $this->formText('commenting_flag_email', get_option('commenting_flag_email')); ?>
+        </div>
+    </div>
+</div>
