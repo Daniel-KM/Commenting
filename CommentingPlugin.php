@@ -323,7 +323,7 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
                     'commenting_view_roles',
                     'commenting_reqapp_comment_roles',
                 ))) {
-               $post[$optionKey] = serialize($post[$optionKey]) ?: serialize(array());
+                $post[$optionKey] = empty($post[$optionKey]) ? serialize(array()) : serialize($post[$optionKey]);
             }
             if (isset($post[$optionKey])) {
                 set_option($optionKey, $post[$optionKey]);

@@ -14,12 +14,12 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
 
     public function browseAction()
     {
-        if (!$this->_hasParam('sort_field')) {
-            $this->_setParam('sort_field', 'added');
+        if (!$this->hasParam('sort_field')) {
+            $this->setParam('sort_field', 'added');
         }
 
-        if (!$this->_hasParam('sort_dir')) {
-            $this->_setParam('sort_dir', 'd');
+        if (!$this->hasParam('sort_dir')) {
+            $this->setParam('sort_dir', 'd');
         }
         parent::browseAction();
     }
@@ -65,6 +65,7 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
 
         $role = current_user()->role;
         $reqAppCommentRoles = unserialize(get_option('commenting_reqapp_comment_roles'));
+        if (empty($reqAppCommentRoles)) $reqAppCommentRoles = array();
         $requiresApproval = in_array($role, $reqAppCommentRoles);
         //via Daniel Lind -- https://groups.google.com/forum/#!topic/omeka-dev/j-tOSAVdxqU
         $reqAppPublicComment = (bool) get_option('commenting_require_public_moderation');
@@ -230,8 +231,8 @@ class Commenting_CommentController extends Omeka_Controller_AbstractActionContro
     {
         require_once dirname(dirname(__FILE__)) . '/forms/CommentForm.php';
         $post = $this->getRequest()->getPost();
-        $a = (integer) $post['address_a'];
-        $b = (integer) $post['address_b'];
+        $a = (integer) empty($post['address_a']) ? 0 : (integer) $post['address_a'];
+        $b = (integer) empty($post['address_b']) ? 0 : (integer) $post['address_b'];
         $form = new Commenting_CommentForm(null, array($a, $b));
         return $form;
     }

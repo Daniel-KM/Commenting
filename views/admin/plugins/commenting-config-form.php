@@ -151,7 +151,7 @@ jQuery(window).load(function () {
                 foreach ($userRoles as $role => $label) {
                     echo '<li>';
                     echo $this->formCheckbox('commenting_moderate_roles[]', $role, array(
-                        'checked' => in_array($role, $moderateRoles) ? 'checked' : '',
+                        'checked' => in_array($role, $moderateRoles ? $moderateRoles : array()) ? 'checked' : '',
                     ));
                     echo ' ' . $label;
                     echo '</li>';
@@ -178,7 +178,7 @@ jQuery(window).load(function () {
                     foreach ($userRoles as $role => $label) {
                         echo '<li>';
                         echo $this->formCheckbox('commenting_comment_roles[]', $role, array(
-                            'checked' => in_array($role, $commentRoles) ? 'checked' : '',
+                            'checked' => in_array($role, $commentRoles ? $commentRoles : array()) ? 'checked' : '',
                         ));
                         echo ' ' . $label;
                         echo '</li>';
@@ -203,7 +203,7 @@ jQuery(window).load(function () {
                     foreach ($userRoles as $role => $label) {
                         echo '<li>';
                         echo $this->formCheckbox('commenting_reqapp_comment_roles[]', $role, array(
-                            'checked' => in_array($role, $reqAppCommentRoles) ? 'checked' : '',
+                            'checked' => in_array($role, $reqAppCommentRoles ? $reqAppCommentRoles : array()) ? 'checked' : '',
                         ));
                         echo ' ' . $label;
                         echo '</li>';
@@ -246,7 +246,7 @@ jQuery(window).load(function () {
                     foreach ($userRoles as $role=> $label) {
                         echo '<li>';
                         echo $this->formCheckbox('commenting_view_roles[]', $role, array(
-                            'checked' => in_array($role, $thisRoles) ? 'checked' : '',
+                            'checked' => in_array($role, $thisRoles ? $thisRoles : array()) ? 'checked' : '',
                         ));
                         echo ' ' . $label;
                         echo '</li>';
