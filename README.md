@@ -167,8 +167,8 @@ Warning
 
 Use it at your own risk.
 
-It's always recommended to backup your files and database regularly so you can
-roll back if needed.
+It’s always recommended to backup your files and your databases and to check
+your archives regularly so you can roll back if needed.
 
 
 Troubleshooting
@@ -203,12 +203,14 @@ Contact
 Current maintainers:
 * [Center for History & New Media]
 
+Improvements were done by Daniel Berthereau for [Mines ParisTech].
+
 
 Copyright
 ---------
 
 * Copyright Center for History and New Media, 2011-2013
-* Copyright Daniel Berthereau, 2013-2015 [Daniel-KM] for [Mines ParisTech]
+* Copyright Daniel Berthereau, 2013-2018 [Daniel-KM]
 
 
 [Omeka]: https://omeka.org
@@ -217,5 +219,5 @@ Copyright
 [GuestUser]: https://github.com/omeka/plugin-GuestUser
 [GNU/GPL]: https://www.gnu.org/licenses/gpl-3.0.html
 [Center for History & New Media]: http://chnm.gmu.edu
-[Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
 [Mines ParisTech]: http://bib.mines-paristech.fr
+[Daniel-KM]: https://github.com/Daniel-KM "Daniel Berthereau"
