@@ -62,6 +62,7 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
         'commenting_wpapi_key' => '',
         'commenting_antispam' => true,
         'commenting_honeypot' => true,
+        'new_comment_notification_recipients' => ''
     );
 
     /**
@@ -194,7 +195,7 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
         if ($this->_isCommentingEnabled()) {
             queue_css_file('commenting');
             queue_js_file('commenting');
-            queue_js_file('tiny_mce', 'javascripts/vendor/tiny_mce');
+            queue_js_file('tinymce.min', 'javascripts/vendor/tinymce/');
             queue_js_string("Commenting.pluginRoot = '" . WEB_ROOT . "/commenting/comment/'");
         }
     }
@@ -324,6 +325,13 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
                     'commenting_reqapp_comment_roles',
                 ))) {
                 $post[$optionKey] = empty($post[$optionKey]) ? serialize(array()) : serialize($post[$optionKey]);
+            } elseif ($optionKey == 'new_comment_notification_recipients') {
+                // sanitize list of emails
+                $emails = array_map('trim', (array) explode("\n", $optionValue));
+                $emails = array_filter($emails, function($val) {
+                    return filter_var($val, FILTER_VALIDATE_EMAIL);
+                });
+                $optionValue = implode("\n", $emails);
             }
             if (isset($post[$optionKey])) {
                 set_option($optionKey, $post[$optionKey]);
