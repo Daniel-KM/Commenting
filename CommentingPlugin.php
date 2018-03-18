@@ -238,7 +238,7 @@ class CommentingPlugin extends Omeka_Plugin_AbstractPlugin
      */
     protected function _showComments($args = array())
     {
-        $view = isset($args['view']) ? $args['view'] : get_view();
+        $view = get_view();
         // This option allows to display comments and comment form separately.
         $display = isset($args['display']) ? array($args['display']) : array('comments', 'comment_form');
         $record = isset($args['record']) ? $args['record'] : null;
