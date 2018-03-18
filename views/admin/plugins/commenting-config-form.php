@@ -3,13 +3,12 @@
     list-style: none outside none;
 }
 </style>
-<?php echo js_tag('vendor/tiny_mce/tiny_mce'); ?>
+<?php echo js_tag('vendor/tinymce/tinymce.min'); ?>
 <script type="text/javascript">
-jQuery(window).load(function () {
-  Omeka.wysiwyg({
-    mode: 'specific_textareas',
-    editor_selector: 'html-editor'
-  });
+jQuery(document).ready(function () {
+    Omeka.wysiwyg({
+        selector: '.html-editor'
+    });
 });
 </script>
 <?php js_tag('commenting-config-form'); ?>
@@ -309,6 +308,18 @@ jQuery(window).load(function () {
         <p class='explanation'><?php echo __('When flagged, an email is sent to the admin. This email is added if needed.'); ?></p>
         <div class='input-block'>
             <?php echo $this->formText('commenting_flag_email', get_option('commenting_flag_email')); ?>
+        </div>
+    </div>
+</div>
+
+<div class="field">
+    <div class="two columns alpha">
+        <label><?php echo __('New Comment Notification Emails'); ?></label>
+    </div>
+    <div class="inputs five columns omega">
+        <p class="explanation"><?php echo __('An email message will be sent to each address here whenever a new comment is contributed (one email per line). Leave blank if you do not want anyone to be alerted of comments by email.'); ?></p>
+        <div class="input-block">
+            <?php echo $this->formTextarea('new_comment_notification_recipients', get_option('new_comment_notification_recipients'), array('rows'=> 5)); ?>
         </div>
     </div>
 </div>

@@ -9,21 +9,6 @@ var Commenting = {
 
     moveForm: function(event) {
         //first make tinyMCE go away so it is safe to move around in the DOM
-        tinyMCE.execCommand('mceRemoveControl', false, 'comment-form-body');
-        jQuery('#comment-form').insertAfter(event.target);
-        commentId = Commenting.getCommentId(event.target);
-        jQuery('#parent-id').val(commentId);
-        tinyMCE.execCommand('mceAddControl', false, 'comment-form-body');
-    },
-
-    flag: function(event) {
-        var commentId = Commenting.getCommentId(event.target);
-        var json = {'id': commentId };
-        jQuery.post(Commenting.pluginRoot + "flag", json, Commenting.flagResponseHandler);
-    },
-
-    moveForm: function(event) {
-        //first make tinyMCE go away so it is safe to move around in the DOM
         tinyMCE.EditorManager.execCommand('mceRemoveEditor', false, 'comment-form-body');
         jQuery('#comment-form').insertAfter(event.target);
         commentId = Commenting.getCommentId(event.target);
